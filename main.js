@@ -4,15 +4,15 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('node:path')
 const isDevelopment = !app.isPackaged
-require('update-electron-app')()
+// require('update-electron-app')()
 
 const createWindow = () => {
 	// Create the browser window.
 	const win = new BrowserWindow({
-		show: false
-		// webPreferences: {
-		// 	preload: path.join(__dirname, 'preload.js')
-		// }
+		show: false,
+		webPreferences: {
+			// preload: path.join(__dirname, 'preload.js')
+		}
 	})
 
 	// 加载 index.html

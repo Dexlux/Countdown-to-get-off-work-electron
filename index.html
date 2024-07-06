@@ -150,7 +150,7 @@
     let holiday
     let targetTime
     let nextWorkDate
-    let isTodayWorkDay = isWorkDay(new Date())
+    
     // 午休文案
     const lunch_break_text = [
         "离中午吃饭还有这么一会儿～",
@@ -260,11 +260,11 @@
         }
   }
 
-    function isWorkDay(now) {
-        now.setHours(0)
-        now.setMinutes(0)
-        now.setSeconds(0)
-        now.setMilliseconds(0)
+    function isWorkDay(date) {
+        date.setHours(0)
+        date.setMinutes(0)
+        date.setSeconds(0)
+        date.setMilliseconds(0)
         let holidays = [
             { "date": "2022-01-01 00:00:00", "name": "元旦" },
             { "date": "2022-01-02 00:00:00", "name": "元旦" },
@@ -309,17 +309,17 @@
             { "date": "2022-10-09 00:00:00", "name": "国庆节调休" },
         ]
         let flag = true
-        if (now.getDay() === 6) {
+        if (date.getDay() === 6) {
             flag = false
             holiday = '周六'
         }
-        if (now.getDay() === 0) {
+        if (date.getDay() === 0) {
             flag = false
             holiday = '周日'
         }
         for (let hol in holidays) {
             let temp = new Date(holidays[hol].date)
-            if (temp.getTime() === now.getTime()) {
+            if (temp.getTime() === date.getTime()) {
                 flag = false
                 holiday = holidays[hol].name
                 break
@@ -327,7 +327,7 @@
         }
         for (let hol in holiday_work) {
             let temp = new Date(holiday_work[hol].date)
-            if (temp.getTime() === now.getTime()) {
+            if (temp.getTime() === date.getTime()) {
                 flag = true
                 holiday = holidays[hol].name
                 break
@@ -359,7 +359,7 @@
     function updateText() {
         nowTime = new Date()
         let text
-        if (isTodayWorkDay) {
+        if (isWorkDay(nowTime)) {
             if (startTime <= nowTime && endTime >= nowTime) {
                 if(nowTime < middleTime) {
                     text = getRandomItemFromArray(lunch_break_text)
